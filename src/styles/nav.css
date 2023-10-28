@@ -1,0 +1,14 @@
+nav{
+    position: relative;
+    width: 400px;
+    background-color: lightskyblue;
+    height: 100vh;
+}
+.nav{
+    display: flex;
+    flex-direction: column;
+}
+.user-info-wrap{
+    width: 100%;
+    height: 200px;
+}

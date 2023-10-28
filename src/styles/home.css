@@ -1,0 +1,12 @@
+.main{
+    display: flex;
+
+}
+.home{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+.home-wrap{
+    justify-content: center;
+}

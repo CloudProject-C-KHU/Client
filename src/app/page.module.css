@@ -1,6 +1,8 @@
+
 .main{
     padding-top: 100px;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
@@ -12,6 +14,13 @@
     font-family: "BM Jua";
     font-size: 50px;
     text-align: center;
+    animation: fadein 2s;
+    -moz-animation: fadein 3s; /* Firefox */
+    -webkit-animation: fadein 3s; /* Safari and Chrome */
+    -o-animation: fadein 3s;
+}
+.test{
+    animation:fadein ease-in-out 2s;
 }
 .login{
     margin-top: 200px;
