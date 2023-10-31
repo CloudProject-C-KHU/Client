@@ -21,7 +21,9 @@ export default function Nav() {
         <div className="nav">
           <div className="user-info-wrap">
             <span> 유저 정보 칸 </span>
-            <button>{isOpen ? <span>close</span> : <span>open</span>}</button>
+            <button className="nav-toggle-button" onClick={toggleNav}>
+              {isOpen ? <span>close</span> : <span>open</span>}
+            </button>
           </div>
           <div>
             <div>

@@ -1,12 +1,17 @@
 nav{
     position: relative;
-    width: 400px;
+    width: 300px;
     background-color: lightskyblue;
     height: 100vh;
 }
 .nav{
     display: flex;
     flex-direction: column;
+}
+.nav-toggle-button{
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 .user-info-wrap{
     width: 100%;
