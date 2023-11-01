@@ -1,47 +1,80 @@
-import React, { useEffect, useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
+"use client";
+// import "../styles/textEdit.css";
+import DOMPurify from "dompurify";
+import dynamic from "next/dynamic";
 import { EditorState } from "draft-js";
 import { convertToHTML } from "draft-convert";
+import React, { useEffect, useState } from "react";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
+import io from "socket.io-client";
+import { error } from "next/dist/build/output/log";
+export const Editor = dynamic(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  {
+    ssr: false,
+  },
+);
+export const socket = io("wq:example");
 export default function TextEdit() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [convertedContent, setConvertedContent] = useState(null);
+  // const [convertedContent, setConvertedContent] = useState(null);
+  //html 변환 함수
+  let html = convertToHTML(editorState.getCurrentContent());
+  // 요건 마크업 변경 작업하다가 놔둔거니 신경 쓰지 마세요
+  function createMarkup(html) {
+    return {
+      __html: DOMPurify.sanitize(html),
+    };
+  }
+
+  /* 소켓 연결 부분 - 컴포넌트 마운트시 */
   useEffect(() => {
-    let html = convertToHTML(editorState.getCurrentContent());
-    setConvertedContent(html);
-    console.log(convertedContent);
+    socket.connect();
+    try {
+      socket.on("connect", () => {
+        console.log(socket.connected); // true
+      });
+    } catch (e) {
+      error();
+    }
+  }, []);
+  /* 데이터 전송 - editorState 변경 시에만 */
+  useEffect(() => {
+    socket.emit(html);
   }, [editorState]);
 
-  // const onEditorStateChange = (editorState) => {
-  //   setEditorState(editorState);
-  //   console.log(editorState);
-  // };
-
+  /* 연결 확인 코드*/
+  // socket.on("connect", () => {
+  //   console.log(socket.connected); // true
+  // });
+  //
+  // socket.on("connect", () => {
+  //   console.log("끊어짐?" + socket.disconnected); // false
+  // });
   return (
-    <>
+    <div>
       <Editor
-        // 에디터와 툴바 모두에 적용되는 클래스
-        wrapperClassName="wrapper-class"
-        // 에디터 주변에 적용된 클래스
-        editorClassName="editor"
-        // 툴바 주위에 적용된 클래스
-        toolbarClassName="toolbar-class"
-        // 툴바 설정
         toolbar={{
-          // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
           list: { inDropdown: true },
           textAlign: { inDropdown: true },
           link: { inDropdown: true },
-          history: { inDropdown: false },
+          history: { inDropdown: true },
         }}
-        placeholder="내용을 작성해주세요."
         localization={{
           locale: "ko",
         }}
+        plugins={[toolbar]}
         editorState={editorState}
         onEditorStateChange={setEditorState}
       />
-    </>
+
+      <textarea
+        className="textarea-box"
+        placeholder="여기는 콘솔이랑 똑같아요"
+        disabled
+        value={html}
+      />
+    </div>
   );
 }
+
