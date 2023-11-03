@@ -40,5 +40,16 @@
         }
     }
 
+    @keyframes slideOut {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        100% {
+            display: none;
+            transform: translateX(-100%);
+            opacity: 1;
+        }
+    }
 }
 

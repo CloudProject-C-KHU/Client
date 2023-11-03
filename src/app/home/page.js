@@ -1,7 +1,7 @@
 "use client";
 import Nav from "@/view/nav";
 import "../../styles/home.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function home() {
   const [isOpen, setIsOpen] = useState(true);
   function handleNav() {
@@ -9,7 +9,7 @@ export default function home() {
   }
   return (
     <main className="main">
-      <div>{isOpen ? <Nav /> : null}</div>
+      <div className="nav-action">{isOpen ? <Nav /> : null}</div>
       <div className="home">
         <div className="nav-isOpen">
           <button type="button" className="btn btn-primary" onClick={handleNav}>

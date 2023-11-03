@@ -5,3 +5,9 @@ nav{
     background-color: #f9e000;
 
 }
+.slide-in{
+    animation: slideIn 1s ease-in-out;
+}
+.slide-out{
+    animation: slideOut 1s ease-in-out;
+}
