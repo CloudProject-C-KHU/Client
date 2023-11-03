@@ -9,7 +9,9 @@ export default function home() {
   }
   return (
     <main className="main">
-      <div className="nav-action">{isOpen ? <Nav /> : null}</div>
+      <div className="nav-action">
+        {isOpen ? <Nav isOpen={isOpen} /> : null}
+      </div>
       <div className="home">
         <div className="nav-isOpen">
           <button type="button" className="btn btn-primary" onClick={handleNav}>
