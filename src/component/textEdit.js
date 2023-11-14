@@ -14,7 +14,10 @@ export const Editor = dynamic(
     ssr: false,
   },
 );
-export const socket = io("wq:example");
+export const socket = io('http://localhost:3001', {
+  withCredentials: true
+});
+
 export default function TextEdit() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   // const [convertedContent, setConvertedContent] = useState(null);
