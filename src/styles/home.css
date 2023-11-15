@@ -1,0 +1,19 @@
+.main{
+    display: flex;
+}
+.home{
+    position: relative;
+}
+.nav-isOpen{
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+.nav-action{
+
+}
+.home-wrap{
+    padding:50px;
+    justify-content: center;
+}
+
