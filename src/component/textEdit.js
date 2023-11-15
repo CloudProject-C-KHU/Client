@@ -1,6 +1,6 @@
 "use client";
 // import "../styles/textEdit.css";
-import DOMPurify from "dompurify";
+// import DOMPurify from "dompurify";
 import dynamic from "next/dynamic";
 import { EditorState } from "draft-js";
 import { convertToHTML } from "draft-convert";
@@ -14,15 +14,15 @@ export const Editor = dynamic(
     ssr: false,
   },
 );
-<<<<<<< HEAD
-// export const socket = io("wq:example");
-export const socket = io("http://localhost:3001");
-=======
-export const socket = io('http://localhost:3001', {
-  withCredentials: true
+// <<<<<<< HEAD
+// // export const socket = io("wq:example");
+// export const socket = io("http://localhost:3001");
+// =======
+export const socket = io("http://localhost:3001", {
+  withCredentials: true,
 });
 
->>>>>>> e831a79ee5deebd63921ccf05941e1b8b81f069e
+// >>>>>>> e831a79ee5deebd63921ccf05941e1b8b81f069e
 export default function TextEdit() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   // const [convertedContent, setConvertedContent] = useState(null);
@@ -86,4 +86,3 @@ export default function TextEdit() {
     </div>
   );
 }
-
