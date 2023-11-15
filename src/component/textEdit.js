@@ -14,7 +14,8 @@ export const Editor = dynamic(
     ssr: false,
   },
 );
-export const socket = io("wq:example");
+// export const socket = io("wq:example");
+export const socket = io("http://localhost:3001");
 export default function TextEdit() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   // const [convertedContent, setConvertedContent] = useState(null);
@@ -40,7 +41,8 @@ export default function TextEdit() {
   }, []);
   /* 데이터 전송 - editorState 변경 시에만 */
   useEffect(() => {
-    socket.emit(html);
+    // console.log("html: ", html);
+    socket.emit("html", html);
   }, [editorState]);
 
   /* 연결 확인 코드*/
