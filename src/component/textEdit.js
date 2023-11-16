@@ -5,8 +5,10 @@ import dynamic from "next/dynamic";
 import { EditorState } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import React, { useEffect, useState } from "react";
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import io from "socket.io-client";
+
 import { error } from "next/dist/build/output/log";
 export const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -25,6 +27,7 @@ export const socket = io("http://localhost:3001", {
 // >>>>>>> e831a79ee5deebd63921ccf05941e1b8b81f069e
 export default function TextEdit() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
   // const [convertedContent, setConvertedContent] = useState(null);
   //html 변환 함수
   let html = convertToHTML(editorState.getCurrentContent());
@@ -48,6 +51,7 @@ export default function TextEdit() {
   }, []);
   /* 데이터 전송 - editorState 변경 시에만 */
   useEffect(() => {
+
     // console.log("html: ", html);
     socket.emit("html", html);
   }, [editorState]);

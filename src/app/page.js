@@ -15,6 +15,7 @@ export default function Home() {
             <div>공유해 보세요</div>
           </h2>
         </div>
+
         <Link href={chatURL}>
           <button className={styles.login}>
             <div>kakao Login</div>
