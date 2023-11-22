@@ -3,10 +3,12 @@
 // import DOMPurify from "dompurify";
 import dynamic from "next/dynamic";
 import { EditorState } from "draft-js";
-import { convertToHTML } from "draft-convert";
+import { convertFromHTML, convertToHTML } from "draft-convert";
 import React, { useEffect, useState } from "react";
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import io from "socket.io-client";
+
 import { error } from "next/dist/build/output/log";
 export const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -19,12 +21,13 @@ export const Editor = dynamic(
 // export const socket = io("http://localhost:3001");
 // =======
 export const socket = io("http://localhost:3001", {
-  withCredentials: true,
+  cors: {origin: "*"}
 });
 
 // >>>>>>> e831a79ee5deebd63921ccf05941e1b8b81f069e
 export default function TextEdit() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
   // const [convertedContent, setConvertedContent] = useState(null);
   //html 변환 함수
   let html = convertToHTML(editorState.getCurrentContent());
@@ -40,6 +43,8 @@ export default function TextEdit() {
     socket.connect();
     try {
       socket.on("connect", () => {
+        // socket.emit()
+        // socket.emit("info", "PORT: 3000");
         console.log(socket.connected); // true
       });
     } catch (e) {
@@ -60,6 +65,13 @@ export default function TextEdit() {
   // socket.on("connect", () => {
   //   console.log("끊어짐?" + socket.disconnected); // false
   // });
+
+
+   /* 해당 정보로 에디터에 표출 필요 */
+  socket.on('response', (res) => {
+    console.log("Response: ", res);
+  });
+
   return (
     <div>
       <Editor
