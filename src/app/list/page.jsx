@@ -8,6 +8,7 @@ export default function List() {
   function handleNav() {
     setIsOpen(!isOpen);
   }
+
   return (
     <main className="main">
       <div className="nav-action">

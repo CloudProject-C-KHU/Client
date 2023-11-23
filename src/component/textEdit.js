@@ -1,92 +1,43 @@
 "use client";
-// import "../styles/textEdit.css";
-// import DOMPurify from "dompurify";
-import dynamic from "next/dynamic";
-import { EditorState } from "draft-js";
-import { convertToHTML } from "draft-convert";
 import React, { useEffect, useState } from "react";
-
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import io from "socket.io-client";
 
-import { error } from "next/dist/build/output/log";
-export const Editor = dynamic(
-  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
-  {
-    ssr: false,
-  },
-);
-// <<<<<<< HEAD
-// // export const socket = io("wq:example");
-// export const socket = io("http://localhost:3001");
-// =======
-export const socket = io("http://localhost:3001", {
-  withCredentials: true,
-});
+export const socket = io("http://localhost:3001");
 
-// >>>>>>> e831a79ee5deebd63921ccf05941e1b8b81f069e
 export default function TextEdit() {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-  // const [convertedContent, setConvertedContent] = useState(null);
-  //html 변환 함수
-  let html = convertToHTML(editorState.getCurrentContent());
-  // 요건 마크업 변경 작업하다가 놔둔거니 신경 쓰지 마세요
-  function createMarkup(html) {
-    return {
-      __html: DOMPurify.sanitize(html),
-    };
-  }
-
-  /* 소켓 연결 부분 - 컴포넌트 마운트시 */
+  const [isText, setIsText] = useState("");
+  const html = isText;
+  // 소켓 연결 후 이벤트 핸들러 등록
   useEffect(() => {
     socket.connect();
     try {
       socket.on("connect", () => {
-        console.log(socket.connected); // true
+        console.log("연결됨", socket.connected);
       });
-    } catch (e) {
-      error();
+    } catch (error) {
+      console.log("연결 실패");
     }
+    // 컴포넌트가 언마운트될 때 소켓 연결 해제
+    return () => {
+      socket.disconnect();
+    };
   }, []);
-  /* 데이터 전송 - editorState 변경 시에만 */
+
   useEffect(() => {
-
-    // console.log("html: ", html);
     socket.emit("html", html);
-  }, [editorState]);
+  }, [isText]);
 
-  /* 연결 확인 코드*/
-  // socket.on("connect", () => {
-  //   console.log(socket.connected); // true
-  // });
-  //
-  // socket.on("connect", () => {
-  //   console.log("끊어짐?" + socket.disconnected); // false
-  // });
+  socket.on("response", (res) => {
+    console.log("Response: ", res);
+  });
+
+  console.log(isText);
+  console.log("html =>", html);
   return (
     <div>
-      <Editor
-        toolbar={{
-          list: { inDropdown: true },
-          textAlign: { inDropdown: true },
-          link: { inDropdown: true },
-          history: { inDropdown: true },
-        }}
-        localization={{
-          locale: "ko",
-        }}
-        plugins={[toolbar]}
-        editorState={editorState}
-        onEditorStateChange={setEditorState}
-      />
-
-      <textarea
-        className="textarea-box"
-        placeholder="여기는 콘솔이랑 똑같아요"
-        disabled
-        value={html}
-      />
+      <ReactQuill theme="snow" value={isText} onChange={setIsText} />
     </div>
   );
 }
