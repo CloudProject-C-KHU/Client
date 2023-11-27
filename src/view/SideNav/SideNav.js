@@ -1,21 +1,27 @@
-"use client";
-import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-
-export default function SideNav() {
+import "./side-nav.css";
+import { useState } from "react";
+import { Button, CloseButton } from "react-bootstrap";
+import { MDBIcon } from "mdb-react-ui-kit";
+export default function SideNav(props) {
   const [isOpen, setIsOpen] = useState(false);
+  const handleOpenClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <div className="side-nav">
-        <button> OPEN</button>
-        {isOpen ? <div></div> : <div></div>}
+        <Button className="side-nav-btn" onClick={handleOpenClick}>
+          {isOpen ? <MDBIcon fas icon="bars" /> : <MDBIcon fas icon="times" />}
+        </Button>
+        <div className={`side-nav-wrap ${isOpen ? "open" : "close"}`}></div>
       </div>
     </>
   );
 }
 
 // "use client";
-// import "../styles/nav.css";
+// import "../styles/side-nav.css";
 // import { useEffect, useState } from "react";
 // import axios from "axios";
 // import { getFriend } from "@/const/const";
