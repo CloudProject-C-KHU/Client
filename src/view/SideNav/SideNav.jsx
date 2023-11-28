@@ -4,6 +4,18 @@ import { Button, CloseButton } from "react-bootstrap";
 import { MDBIcon } from "mdb-react-ui-kit";
 export default function SideNav(props) {
   const [isOpen, setIsOpen] = useState(false);
+  //   const [isfriendList, setIsfriendList] = useState([]);
+  //   useEffect(() => {
+  //     axios
+  //       .get(getFriend)
+  //       .then((res) => {
+  //         console.log(res);
+  //         setIsfriendList(res.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }, []);
   const handleOpenClick = () => {
     setIsOpen(!isOpen);
   };
