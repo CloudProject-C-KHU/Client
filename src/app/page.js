@@ -2,35 +2,42 @@
 import styles from "./page.module.css";
 import Link from "next/link";
 import { useEffect } from "react";
+import KakaoLogin from "react-kakao-login";
 
 export default function Home() {
   const chatURL = "/list";
-  const url =
-    "https://kauth.kakao.com/oauth/authorize?client_id=c79a3544b3466643b7709be0f727f138&redirect_uri=http://localhost:3000/auth/kakao/callback&response_type=code'";
+  const responseKaKao = (response) => {
+    // 카카오 로그인 성공 시 실행되는 콜백 함수
+    console.log(response);
 
-  const loginBtn = async () => {
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        // 데이터를 쿠키에 저장
-        document.cookie = `usersInfo=${JSON.stringify(data)}`;
-        // "/list" 페이지로 이동
-        window.location.href = "/list";
-      } else {
-        // 응답이 실패한 경우
-        throw new Error(`로그인 실패: ${response.status}`);
-      }
-    } catch (e) {
-      // 오류 처리
-      console.error(e);
-    }
+    // 서버로 토큰 전송
+    sendTokenToServer(response.access_token);
   };
 
+  const sendTokenToServer = async (accessToken) => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/auth/kakao/callback",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ accessToken }),
+        },
+      );
+
+      if (response.ok) {
+        const userData = await response.json();
+        console.log("User data from server:", userData);
+        // 여기서 필요에 따라 상태 업데이트 등을 수행할 수 있습니다.
+      } else {
+        console.error("Failed to send token to server");
+      }
+    } catch (error) {
+      console.error("Error sending token to server:", error);
+    }
+  };
   return (
     <main className={styles.main}>
       <div>
@@ -43,12 +50,13 @@ export default function Home() {
             <div>공유해 보세요</div>
           </h2>
         </div>
-
-        {/*<Link href={chatURL}>*/}
-        <button className={styles.login} onClick={loginBtn}>
-          <div>kakao Login</div>
-        </button>
-        {/*</Link>*/}
+        <KakaoLogin
+          token="c79a3544b3466643b7709be0f727f138"
+          onSuccess={responseKaKao}
+          onFail={(error) => console.log(error)}
+          onLogout={() => console.log("Logout")}
+          useLoginForm
+        />
       </div>
     </main>
   );
