@@ -18,7 +18,7 @@ export default function Header() {
   return (
     <MDBNavbar expand="lg" light bgColor="light">
       <MDBContainer fluid>
-        <MDBNavbarBrand href="#">KHU Doc</MDBNavbarBrand>
+        <MDBNavbarBrand>KHU Doc</MDBNavbarBrand>
       </MDBContainer>
     </MDBNavbar>
   );

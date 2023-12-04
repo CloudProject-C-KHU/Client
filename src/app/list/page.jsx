@@ -7,6 +7,10 @@ import SideNav from "@/view/SideNav/SideNav";
 import Header from "@/view/Header/Header";
 export default function List() {
   const [isOpen, setIsOpen] = useState(true);
+  useEffect(() => {
+    const chatListContainer = document.querySelector(".list");
+    chatListContainer.style.overflowY = "auto";
+  }, []);
   return (
     <div>
       <div className="page-layout">

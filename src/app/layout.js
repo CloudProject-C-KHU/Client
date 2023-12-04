@@ -5,7 +5,6 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Footer from "@/view/Footer/Footer";
 import Header from "@/view/Header/Header";
-
 // const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "KHU DOC",

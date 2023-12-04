@@ -4,7 +4,7 @@
     width: 100%;
     overflow: hidden;
 }
-.list{
+.list-detail{
     width: 100%;
     min-width: 500px;
     align-items: center;
@@ -14,7 +14,7 @@
     padding-left: 5%;
     padding-right: 5%;
 }
-.list > h1{
+.list-detail > h1{
     width: 100%;
     max-width: 1000px;
     padding: 10px;

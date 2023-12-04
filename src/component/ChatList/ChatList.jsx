@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { noteList } from "@/api";
 import React from "react";
-import "../ChatList/chatlist.css";
+import "./chat-list.css";
 import { MDBBadge, MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import Link from "next/link";
 export default function ChatList() {
@@ -35,7 +35,12 @@ export default function ChatList() {
       <div className="chat-list">
         <MDBListGroup light>
           {isNotes.map((note, i) => (
-            <Link href={"/list/" + note.Object_Id}>
+            <Link
+              href={{
+                pathname: "/list/" + note.Object_Id,
+                query: { title: note.title, count: note.count },
+              }}
+            >
               <MDBListGroupItem className="d-flex justify-content-between align-items-center">
                 {note.title}
                 <MDBBadge pill light>
