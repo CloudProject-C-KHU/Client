@@ -1,7 +1,6 @@
-
 .main{
-    padding-top: 100px;
     display: flex;
+    height: 100vh;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -21,17 +20,4 @@
 }
 .test{
     animation:fadein ease-in-out 2s;
-}
-.login{
-    margin-top: 200px;
-    width: 500px;
-    height: 70px;
-    background-color:#f9e000;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.login div{
-    font-size: 20px;
 }
