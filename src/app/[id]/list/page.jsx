@@ -1,5 +1,5 @@
 "use client";
-import "../../styles/list.css";
+import "@/styles/list.css";
 import { useEffect, useState } from "react";
 
 import ChatList from "@/component/ChatList/ChatList";
