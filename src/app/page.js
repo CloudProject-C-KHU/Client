@@ -12,22 +12,20 @@ export default function Home() {
   const searchParams = useSearchParams();
   useEffect(() => {
     const code = searchParams.get("code");
+    setIsCode(code);
     if (code !== null) {
       try {
-        // FetchLogin 함수를 async 함수로 호출하도록 변경
-        const fetchData = async () => {
-          await FetchLogin(code);
-        };
-
-        fetchData();
+        console.log("fetch 실행");
+        FetchLogin();
       } catch (e) {
         console.error(e);
       }
     }
-  }, [searchParams]);
+  }, [isCode]);
 
   const FetchLogin = async () => {
     try {
+      console.log("code == ", isCode); // 잘나옴
       const response = await fetch(login, {
         method: "POST",
         headers: {
@@ -35,10 +33,10 @@ export default function Home() {
         },
         body: JSON.stringify({ code: isCode }), //
       });
-
       if (response.ok) {
-        setId(response);
-        console.log(isCode);
+        const responseData = await response.json();
+        const userId = responseData.id;
+        setId(userId);
       } else {
         console.error("Error from server:", response.status);
       }
@@ -46,7 +44,6 @@ export default function Home() {
       console.error("Error sending data to server:", error);
     }
   };
-  console.log("is id = " + id);
   return (
     <main className={styles.main}>
       <div>

@@ -1,4 +1,5 @@
-export const baseUrl = "http://3.211.81.224";
+// export const baseUrl = "http://3.211.81.224";
+export const baseUrl = "http://localhost:8080";
 export const login = baseUrl + "/auth";
 export const noteList = baseUrl + "/note"; //더미 데이터 용
 // export const noteList = "/note/list";

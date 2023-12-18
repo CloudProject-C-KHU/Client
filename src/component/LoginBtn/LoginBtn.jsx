@@ -4,7 +4,6 @@ import "../LoginBtn/login-btn.css";
 import { KAKAO_LOGIN, login } from "@/api";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { router } from "next/client";
 
 export default function LoginBtn() {
   // const router = useRouter();
@@ -30,7 +29,7 @@ export default function LoginBtn() {
   //     headers: {
   //       "Content-Type": "application/json",
   //     },
-  //     body: JSON.stringify({ code }),
+  //     body: JSON.stringify({ code: code }),
   //   })
   //     .then((response) => {
   //       if (response.ok) {
