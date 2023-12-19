@@ -6,6 +6,7 @@ import { MDBIcon } from "mdb-react-ui-kit";
 import axios from "axios";
 import { getFriend } from "@/api";
 import { usePathname } from "next/navigation";
+import MakeChat from "@/component/SideNav/MakeChat/MakeChat";
 
 export default function SideNav(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,7 @@ export default function SideNav(props) {
       .post(getFriend, requestData)
       .then((res) => {
         console.log(res);
-        setIsFriendList(res.data);
+        setIsFriendList(res.data.friendList);
       })
       .catch((error) => {
         console.log(error);
@@ -39,7 +40,23 @@ export default function SideNav(props) {
           {isOpen ? <MDBIcon fas icon="bars" /> : <MDBIcon fas icon="times" />}
         </Button>
         <div className={`side-nav-wrap ${isOpen ? "open" : "close"}`}>
-          <div> 안녕하세요</div>
+          <div className="make-chat-btn">
+            <MakeChat />
+          </div>
+          <div style={{ paddingTop: 60 }}>
+            {isFriendList.map((friend, i) => (
+              <div className="friend-item">
+                <div className="friend-item-wrap">
+                  <div className="friend-item-wrap-profileImg">
+                    <img src={friend.profileImg} />
+                  </div>
+                  <div>
+                    <span>{friend.name}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import "@/styles/list-detail.css";
-import SideNav from "@/view/SideNav/SideNav";
+import SideNav from "@/component/SideNav/SideNav";
 import TextEdit from "@/component/TextEdit/TextEdit";
 
 export default function List() {

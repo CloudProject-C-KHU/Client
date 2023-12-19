@@ -28,7 +28,7 @@ export default function ChatList() {
           body: JSON.stringify({ user: extractedUserId }),
         });
         const data = await response.json();
-        setIsNotes(data); // Update state with the fetched data
+        setIsNotes(data.shareNoteList); // Update state with the fetched data
       } catch (e) {
         console.error("Error", e.message);
         // You might want to handle the error in a more user-friendly way
@@ -42,23 +42,23 @@ export default function ChatList() {
   return (
     <>
       <div className="chat-list">
-        {/*<MDBListGroup light>*/}
-        {/*  {isNotes.map((note, i) => (*/}
-        {/*    <Link*/}
-        {/*      href={{*/}
-        {/*        pathname: user_id + "/" + note.Object_Id,*/}
-        {/*        // query: { title: note.title, count: note.count },*/}
-        {/*      }}*/}
-        {/*    >*/}
-        {/*      <MDBListGroupItem className="d-flex justify-content-between align-items-center">*/}
-        {/*        {note.title}*/}
-        {/*        <MDBBadge pill light>*/}
-        {/*          {note.count}*/}
-        {/*        </MDBBadge>*/}
-        {/*      </MDBListGroupItem>*/}
-        {/*    </Link>*/}
-        {/*  ))}*/}
-        {/*</MDBListGroup>*/}
+        <MDBListGroup light>
+          {isNotes.map((note, i) => (
+            <Link
+              href={{
+                pathname: user_id + "/" + note.Object_Id,
+                // query: { title: note.title, count: note.count },
+              }}
+            >
+              <MDBListGroupItem className="d-flex justify-content-between align-items-center">
+                {note.title}
+                <MDBBadge pill light>
+                  {note.count}
+                </MDBBadge>
+              </MDBListGroupItem>
+            </Link>
+          ))}
+        </MDBListGroup>
       </div>
     </>
   );

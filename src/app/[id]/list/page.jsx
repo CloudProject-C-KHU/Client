@@ -3,7 +3,7 @@ import "@/styles/list.css";
 import { useEffect, useState } from "react";
 
 import ChatList from "@/component/ChatList/ChatList";
-import SideNav from "@/view/SideNav/SideNav";
+import SideNav from "@/component/SideNav/SideNav";
 import Header from "@/view/Header/Header";
 import { usePathname } from "next/navigation";
 export default function List() {
