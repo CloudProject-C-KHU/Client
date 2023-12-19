@@ -5,44 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { login } from "@/api";
 export default function Home() {
-  // const router = useRouter();
-  // const [isCode, setIsCode] = useState(null);
-  // const [id, setId] = useState(null);
-  // const searchParams = useSearchParams();
-  // useEffect(() => {
-  //   const code = searchParams.get("code");
-  //   setIsCode(code);
-  //   if (code !== null) {
-  //     try {
-  //       console.log("fetch 실행");
-  //       FetchLogin();
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   }
-  // }, [isCode]);
-  //
-  // const FetchLogin = async () => {
-  //   try {
-  //     console.log("FetchLogin 작동 code == ", isCode); // 잘나옴
-  //     const response = await fetch(login, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ code: isCode }), //
-  //     });
-  //     if (response.ok) {
-  //       const responseData = await response.json();
-  //       const userId = responseData.id;
-  //       setId(userId);
-  //     } else {
-  //       console.error("Error from server:", response.status);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sending data to server:", error);
-  //   }
-  // };
   const router = useRouter();
   const [isCode, setIsCode] = useState(null);
   const [id, setId] = useState(null);
@@ -56,7 +18,6 @@ export default function Home() {
   const memoizedFetchLogin = useMemo(() => {
     const FetchLogin = async () => {
       try {
-        console.log("FetchLogin 작동 code == ", isCode);
         const response = await fetch(login, {
           method: "POST",
           headers: {

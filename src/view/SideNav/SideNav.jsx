@@ -17,15 +17,6 @@ export default function SideNav(props) {
     const requestData = {
       user: extractedUserId,
     };
-
-    // Use axios.post with the correct endpoint URL and request data
-    // fetch(getFriend, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //
-    // });
     axios
       .post(getFriend, requestData)
       .then((res) => {
@@ -35,7 +26,7 @@ export default function SideNav(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, [isOpen, extractedUserId]); // extractedUserId가 변경되었을 때에만 다시 렌더링
+  }, [isOpen, extractedUserId]);
 
   const handleOpenClick = () => {
     setIsOpen(!isOpen);
