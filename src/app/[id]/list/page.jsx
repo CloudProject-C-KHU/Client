@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import ChatList from "@/component/ChatList/ChatList";
 import SideNav from "@/view/SideNav/SideNav";
 import Header from "@/view/Header/Header";
+import { usePathname } from "next/navigation";
 export default function List() {
-  const [isOpen, setIsOpen] = useState(true);
+  const id = usePathname();
   useEffect(() => {
     const chatListContainer = document.querySelector(".list");
     chatListContainer.style.overflowY = "auto";

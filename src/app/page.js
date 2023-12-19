@@ -64,10 +64,12 @@ export default function Home() {
           },
           body: JSON.stringify({ code: isCode }),
         });
+        const responseData = await response.json();
+        console.log(responseData);
         if (response.ok) {
-          const responseData = await response.json();
           const userId = responseData.id;
           setId(userId);
+          router.push(userId + "/list");
         } else {
           console.error("Error from server:", response.status);
         }

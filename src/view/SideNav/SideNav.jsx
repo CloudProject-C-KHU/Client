@@ -1,15 +1,33 @@
+"use client";
 import "./side-nav.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Button, CloseButton } from "react-bootstrap";
 import { MDBIcon } from "mdb-react-ui-kit";
 import axios from "axios";
 import { getFriend } from "@/api";
+import { usePathname } from "next/navigation";
+
 export default function SideNav(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isFriendList, setIsFriendList] = useState([]);
+  const user_id = usePathname();
+  const extractedUserId = useMemo(() => user_id.split("/")[1], [user_id]);
   useEffect(() => {
+    // Create an object with user_id
+    const requestData = {
+      user: extractedUserId,
+    };
+
+    // Use axios.post with the correct endpoint URL and request data
+    // fetch(getFriend, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //
+    // });
     axios
-      .get(getFriend)
+      .post(getFriend, requestData)
       .then((res) => {
         console.log(res);
         setIsFriendList(res.data);
@@ -17,7 +35,8 @@ export default function SideNav(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, [isOpen]);
+  }, [isOpen, extractedUserId]); // extractedUserId가 변경되었을 때에만 다시 렌더링
+
   const handleOpenClick = () => {
     setIsOpen(!isOpen);
   };

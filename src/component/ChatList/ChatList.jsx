@@ -1,22 +1,31 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { noteList } from "@/api";
 import React from "react";
 import "./chat-list.css";
 import { MDBBadge, MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 export default function ChatList() {
   const [isNotes, setIsNotes] = useState([]);
-
+  const user_id = usePathname();
+  const extractedUserId = useMemo(() => user_id.split("/")[1], [user_id]);
+  useEffect(() => {
+    // Create an object with user_id
+    const requestData = {
+      user: extractedUserId,
+    };
+  });
+  console.log("chatlist" + user_id);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(noteList, {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          // body: "email",
+          body: JSON.stringify({ user: extractedUserId }),
         });
         const data = await response.json();
         setIsNotes(data); // Update state with the fetched data
@@ -33,23 +42,23 @@ export default function ChatList() {
   return (
     <>
       <div className="chat-list">
-        <MDBListGroup light>
-          {isNotes.map((note, i) => (
-            <Link
-              href={{
-                pathname: "/list/" + note.Object_Id,
-                query: { title: note.title, count: note.count },
-              }}
-            >
-              <MDBListGroupItem className="d-flex justify-content-between align-items-center">
-                {note.title}
-                <MDBBadge pill light>
-                  {note.count}
-                </MDBBadge>
-              </MDBListGroupItem>
-            </Link>
-          ))}
-        </MDBListGroup>
+        {/*<MDBListGroup light>*/}
+        {/*  {isNotes.map((note, i) => (*/}
+        {/*    <Link*/}
+        {/*      href={{*/}
+        {/*        pathname: user_id + "/" + note.Object_Id,*/}
+        {/*        // query: { title: note.title, count: note.count },*/}
+        {/*      }}*/}
+        {/*    >*/}
+        {/*      <MDBListGroupItem className="d-flex justify-content-between align-items-center">*/}
+        {/*        {note.title}*/}
+        {/*        <MDBBadge pill light>*/}
+        {/*          {note.count}*/}
+        {/*        </MDBBadge>*/}
+        {/*      </MDBListGroupItem>*/}
+        {/*    </Link>*/}
+        {/*  ))}*/}
+        {/*</MDBListGroup>*/}
       </div>
     </>
   );
