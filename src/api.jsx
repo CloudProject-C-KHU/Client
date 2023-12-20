@@ -1,4 +1,4 @@
-export const baseUrl = "http://54.196.27.117";
+export const baseUrl = "http://54.196.27.117:8080";
 // export const baseUrl = "http://localhost:4000";
 // export const baseUrl = "http://localhost:8080";
 
