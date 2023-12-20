@@ -1,9 +1,10 @@
-// export const baseUrl = "http://3.211.81.224";
+export const baseUrl = "http://54.196.27.117:8080";
 // export const baseUrl = "http://localhost:4000";
-export const baseUrl = "http://localhost:8080";
+// export const baseUrl = "http://localhost:8080";
 
 export const login = baseUrl + "/auth";
 export const noteList = baseUrl + "/note/list";
+export const makeNote = baseUrl + "/note";
 // export const noteList = "/note/list";
 export const getFriend = baseUrl + "/friend/list";
 // export const KAKAO_LOGIN =

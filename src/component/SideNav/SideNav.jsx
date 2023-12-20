@@ -41,7 +41,7 @@ export default function SideNav(props) {
         </Button>
         <div className={`side-nav-wrap ${isOpen ? "open" : "close"}`}>
           <div className="make-chat-btn">
-            <MakeChat />
+            <MakeChat user={extractedUserId} />
           </div>
           <div style={{ paddingTop: 60 }}>
             {isFriendList.map((friend, i) => (
