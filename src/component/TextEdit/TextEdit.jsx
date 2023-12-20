@@ -1,61 +1,95 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import io from "socket.io-client";
+import { useSearchParams } from "next/navigation";
+import { saveNote } from "@/api";
+import styled from "styled-components";
 
-// export const socket = io("http://localhost:3001", {
-//   cors: { origin: "*" },
-// });
-//
+const Container = styled.div`
+  width: 70%;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const Editor = styled(ReactQuill)`
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  min-height: 200px;
+
+  .ql-editor {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    min-height: 200px;
+  }
+`;
+export const socket = io("http://localhost:3001", {
+  cors: { origin: "*" },
+});
+
 export default function TextEdit() {
   const [isText, setIsText] = useState("");
-  const html = isText;
-  //
-  //   useEffect(() => {
-  //     // 소켓 연결 후 이벤트 핸들러 등록
-  //     socket.connect();
-  //     try {
-  //       socket.on("connect", () => {
-  //         console.log("연결됨", socket.connected);
-  //       });
-  //     } catch (error) {
-  //       console.log("연결 실패");
-  //     }
-  //
-  //     // 컴포넌트가 언마운트될 때 소켓 연결 해제
-  //     return () => {
-  //       socket.disconnect();
-  //     };
-  //   }, []);
-  //
-  //   useEffect(() => {
-  //     // 컴포넌트가 마운트될 때 한 번만 실행되도록 변경
-  //     if (isText !== "") {
-  //       socket.on("html", html);
-  //     }
-  //   }, [html]);
-  //
-  //   useEffect(() => {
-  //     const handleResponse = (res) => {
-  //       setIsText(res);
-  //       console.log("Response: ", res);
-  //     };
-  //
-  //     // 이벤트 핸들러 등록
-  //     socket.on("response", handleResponse);
-  //
-  //     // 컴포넌트가 언마운트될 때 이벤트 핸들러 제거
-  //     return () => {
-  //       socket.off("response", handleResponse);
-  //     };
-  //   }, []); // 빈 배열로 전달하여 컴포넌트가 마운트될 때 한 번만 실행
-  //
-  //   console.log(isText);
-  //   console.log("html =>", html);
+  const params = useSearchParams();
+  const _id = params.get("id");
+  const title = params.get("title");
+
+  const fetchNote = () => {
+    fetch(saveNote + "/" + _id, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: title,
+        content: isText,
+      }),
+    });
+  };
+
+  useEffect(() => {
+    socket.connect();
+    try {
+      socket.on("connect", () => {
+        console.log("연결됨", socket.connected);
+      });
+    } catch (error) {
+      console.log("연결 실패");
+    }
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isText !== "") {
+      socket.emit("html", isText); // "html" 이벤트 발생시 서버에 내용 전송
+    }
+  }, [isText]);
+
+  useEffect(() => {
+    const handleResponse = (res) => {
+      setIsText(res);
+      console.log("Response: ", res);
+    };
+
+    socket.on("response", handleResponse);
+
+    return () => {
+      socket.off("response", handleResponse);
+    };
+  }, []);
+
+  console.log(isText);
 
   return (
-    <div>
-      <ReactQuill theme="snow" value={isText} onChange={setIsText} />
-    </div>
+    <Container>
+      <Editor theme="snow" value={isText} onChange={setIsText} />
+    </Container>
   );
 }

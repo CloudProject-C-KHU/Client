@@ -46,8 +46,8 @@ export default function ChatList() {
           {isNotes.map((note, i) => (
             <Link
               href={{
-                pathname: user_id + "/" + note.Object_Id,
-                // query: { title: note.title, count: note.count },
+                pathname: user_id + "/" + note._id,
+                query: { title: note.title, id: note._id },
               }}
             >
               <MDBListGroupItem className="d-flex justify-content-between align-items-center">
